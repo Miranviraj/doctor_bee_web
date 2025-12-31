@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.doctor_bee",
+      "sha256_cert_fingerprints": [
+        "A3:B0:50:CB:FA:25:DC:58:5C:04:8D:B3:DA:40:34:B8:87:81:C3:22:5C:19:E1:D4:E6:99:CB:6C:DC:AE:C8:D7"
+      ]
+    }
+  }
+]

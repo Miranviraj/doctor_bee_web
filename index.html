@@ -147,17 +147,31 @@
     </div>
 
     <script>
-      // 1. Get ID from URL (e.g., domain.com/profile/5 -> ID is 5)
-      const pathSegments = window.location.pathname.split("/");
-      const userId = pathSegments[pathSegments.length - 1]; // Gets the last part
+      // 1. SMART ID RETRIEVAL
+      // Tries to find ID in query param (?id=14) first (for local testing)
+      // If not found, tries the path (/profile/14) (for production)
+      const urlParams = new URLSearchParams(window.location.search);
+      let userId = urlParams.get("id");
 
-      // ⚠️ REPLACE THIS WITH YOUR REAL PUBLIC BACKEND URL (Not Localhost if deploying!)
-      // If testing on same WiFi, use http://192.168.x.x:8080
-      const API_URL = ` http://192.168.8.106:8081/api/v1/patient/public/${userId}`;
+      if (!userId) {
+        const pathSegments = window.location.pathname.split("/");
+        userId = pathSegments[pathSegments.length - 1];
+      }
+
+      // 2. ✅ YOUR NGROK URL
+      const API_URL = `https://guiltily-nonfenestrated-rodolfo.ngrok-free.dev/api/v1/patient/public/${userId}`;
 
       async function loadProfile() {
         try {
-          const response = await fetch(API_URL);
+          // 3. ✅ CRITICAL HEADER ADDED HERE
+          const response = await fetch(API_URL, {
+            method: "GET",
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+              "Content-Type": "application/json",
+            },
+          });
+
           if (!response.ok) throw new Error("Failed");
 
           const json = await response.json();
@@ -183,6 +197,7 @@
           document.getElementById("loading").style.display = "none";
           document.getElementById("profile").style.display = "block";
         } catch (error) {
+          console.error(error);
           document.getElementById("loading").style.display = "none";
           document.getElementById("error").style.display = "block";
           document.getElementById("error").innerText =

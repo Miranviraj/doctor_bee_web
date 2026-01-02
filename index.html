@@ -4,152 +4,338 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doctor Bee Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
+      :root {
+        --primary: #007bff;
+        --primary-dark: #0056b3;
+        --accent: #00d2ff;
+        --text-dark: #1e293b;
+        --text-light: #64748b;
+        --white: #ffffff;
+        --glass: rgba(255, 255, 255, 0.9);
+        --shadow: 0 10px 40px -10px rgba(0, 123, 255, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f5f7fa;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        min-height: 100vh;
         display: flex;
+        align-items: center;
         justify-content: center;
         padding: 20px;
+        color: var(--text-dark);
       }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
       .card {
-        background: white;
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 30px;
         width: 100%;
-        max-width: 400px;
-        border-radius: 20px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 380px;
+        box-shadow: var(--shadow);
         overflow: hidden;
-        text-align: center;
-      }
-      .header {
-        background: linear-gradient(135deg, #007bff, #0056b3);
-        height: 120px;
-        margin-bottom: 50px;
         position: relative;
+        animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.5);
       }
-      .avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 4px solid white;
-        background: #ddd;
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Header Design */
+      .header-bg {
+        height: 140px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        position: relative;
+        clip-path: ellipse(150% 100% at 50% 0%);
+      }
+
+      .avatar-container {
         position: absolute;
-        bottom: -50px;
+        top: 70px;
         left: 50%;
         transform: translateX(-50%);
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        padding: 5px;
+        background: var(--white);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
         object-fit: cover;
+        background: #f1f5f9;
       }
+
+      /* Profile Content */
+      .content {
+        padding: 70px 30px 40px; /* Top padding clears avatar */
+        text-align: center;
+      }
+
       .name {
-        font-size: 22px;
-        font-weight: bold;
-        color: #333;
-        margin-top: 10px;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+        letter-spacing: -0.5px;
       }
-      .role {
+
+      .role-badge {
         display: inline-block;
-        background: #e3f2fd;
-        color: #007bff;
-        padding: 5px 15px;
-        border-radius: 15px;
-        font-size: 14px;
+        padding: 6px 16px;
+        background: rgba(0, 123, 255, 0.1);
+        color: var(--primary);
+        border-radius: 50px;
+        font-size: 13px;
         font-weight: 600;
-        margin: 5px 0 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 30px;
       }
+
+      /* Info List */
+      .info-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
       .info-item {
         display: flex;
         align-items: center;
-        padding: 15px 25px;
-        border-bottom: 1px solid #eee;
-        text-align: left;
+        background: #f8fafc;
+        padding: 15px 20px;
+        border-radius: 16px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid transparent;
       }
-      .info-item:last-child {
-        border-bottom: none;
+
+      .info-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 123, 255, 0.2);
+        background: #ffffff;
       }
-      .info-item i {
-        width: 30px;
-        color: #007bff;
+
+      .icon-box {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
         font-size: 18px;
+        flex-shrink: 0;
+        margin-right: 15px;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
       }
-      .info-text small {
-        display: block;
-        color: #888;
-        font-size: 12px;
+
+      .info-text {
+        text-align: left;
+        flex: 1;
+        overflow: hidden;
       }
-      .info-text strong {
-        display: block;
-        color: #333;
+
+      .info-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--text-light);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+      }
+
+      .info-value {
         font-size: 15px;
+        color: var(--text-dark);
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
+
+      /* Button */
       .download-btn {
         display: block;
-        background: #007bff;
+        margin-top: 30px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
         color: white;
         text-decoration: none;
-        padding: 15px;
-        font-weight: bold;
-        margin: 20px;
-        border-radius: 12px;
+        padding: 16px;
+        border-radius: 16px;
+        font-weight: 600;
+        font-size: 15px;
+        box-shadow: 0 10px 20px rgba(0, 123, 255, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
       }
+
+      .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(0, 123, 255, 0.4);
+      }
+
+      .download-btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .download-btn:hover::after {
+        left: 100%;
+      }
+
+      /* States */
+      .loading,
       .error {
-        color: red;
-        padding: 20px;
-        display: none;
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-light);
       }
-      .loading {
-        padding: 50px;
-        color: #666;
+      .loading i {
+        font-size: 40px;
+        color: var(--primary);
+        margin-bottom: 15px;
+        animation: spin 1s linear infinite;
+      }
+      .error i {
+        font-size: 40px;
+        color: #ef4444;
+        margin-bottom: 15px;
+      }
+
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
   </head>
   <body>
     <div class="card">
-      <div id="loading" class="loading">Loading Profile...</div>
-      <div id="error" class="error">Profile not found.</div>
+      <div id="loading" class="loading">
+        <i class="fas fa-circle-notch"></i>
+        <p>Fetching Profile...</p>
+      </div>
+
+      <div id="error" class="error" style="display: none">
+        <i class="fas fa-exclamation-circle"></i>
+        <p id="errorMsg">Profile not found.</p>
+      </div>
 
       <div id="profile" style="display: none">
-        <div class="header">
+        <div class="header-bg"></div>
+
+        <div class="avatar-container">
           <img id="avatar" src="" class="avatar" alt="User" />
         </div>
 
-        <div class="name" id="fullName">...</div>
-        <div class="role" id="designation">User</div>
+        <div class="content">
+          <h1 class="name" id="fullName">...</h1>
+          <span class="role-badge" id="designation">User</span>
 
-        <div class="info-item">
-          <i class="fas fa-envelope"></i>
-          <div class="info-text">
-            <small>Email</small>
-            <strong id="email">...</strong>
+          <div class="info-list">
+            <div class="info-item">
+              <div class="icon-box">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="info-text">
+                <div class="info-label">Email Address</div>
+                <div class="info-value" id="email">...</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="icon-box">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="info-text">
+                <div class="info-label">Phone Number</div>
+                <div class="info-value" id="phone">...</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="icon-box">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="info-text">
+                <div class="info-label">Location</div>
+                <div class="info-value" id="address">...</div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="info-item">
-          <i class="fas fa-phone"></i>
-          <div class="info-text">
-            <small>Phone</small>
-            <strong id="phone">...</strong>
-          </div>
+          <a href="#" class="download-btn">
+            Get Doctor Bee App
+            <i class="fas fa-arrow-right" style="margin-left: 8px"></i>
+          </a>
         </div>
-
-        <div class="info-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <div class="info-text">
-            <small>Address</small>
-            <strong id="address">...</strong>
-          </div>
-        </div>
-
-        <a href="#" class="download-btn">Get Doctor Bee App</a>
       </div>
     </div>
 
     <script>
       // 1. SMART ID RETRIEVAL
-      // Tries to find ID in query param (?id=14) first (for local testing)
-      // If not found, tries the path (/profile/14) (for production)
       const urlParams = new URLSearchParams(window.location.search);
       let userId = urlParams.get("id");
 
@@ -163,7 +349,7 @@
 
       async function loadProfile() {
         try {
-          // 3. ✅ CRITICAL HEADER ADDED HERE
+          // 3. ✅ CRITICAL HEADER
           const response = await fetch(API_URL, {
             method: "GET",
             headers: {
@@ -175,22 +361,25 @@
           if (!response.ok) throw new Error("Failed");
 
           const json = await response.json();
-          const data = json.data || json; // Handle wrapped or raw data
+          const data = json.data || json;
 
           // Update UI
           document.getElementById("fullName").innerText =
             data.fullName || "Unknown";
           document.getElementById("designation").innerText =
             data.designation || "Member";
-          document.getElementById("email").innerText = data.email || "-";
-          document.getElementById("phone").innerText = data.phoneNumber || "-";
-          document.getElementById("address").innerText = data.address || "-";
+          document.getElementById("email").innerText =
+            data.email || "Not Available";
+          document.getElementById("phone").innerText =
+            data.phoneNumber || "Not Available";
+          document.getElementById("address").innerText =
+            data.address || "Not Available";
 
           if (data.profileUrl) {
             document.getElementById("avatar").src = data.profileUrl;
           } else {
             document.getElementById("avatar").src =
-              "https://via.placeholder.com/100";
+              "https://via.placeholder.com/150/007bff/ffffff?text=User";
           }
 
           // Show Profile
@@ -200,8 +389,8 @@
           console.error(error);
           document.getElementById("loading").style.display = "none";
           document.getElementById("error").style.display = "block";
-          document.getElementById("error").innerText =
-            "Could not load profile. Check your connection.";
+          document.getElementById("errorMsg").innerText =
+            "Could not load profile. Check connection.";
         }
       }
 

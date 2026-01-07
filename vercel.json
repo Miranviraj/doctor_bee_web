@@ -5,8 +5,8 @@
       "destination": "/.well-known/assetlinks.json"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/public/assets/$1"
+      "source": "/logo.png",
+      "destination": "/logo.png"
     },
     {
       "source": "/(.*)",

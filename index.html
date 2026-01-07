@@ -54,6 +54,17 @@
           background-position: 0% 50%;
         }
       }
+      .logo {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+
+      .logo img {
+        height: 50px; /* adjust if needed */
+      }
 
       .card {
         background: var(--glass);
@@ -272,10 +283,9 @@
     </style>
   </head>
   <body>
-<div class="logo">
-      <img src="./assets/logo.png" alt="Logo">
+    <div class="logo">
+      <img src="./assets/logo.png" alt="Logo" />
     </div>
-</div>
 
     <div class="card">
       <div id="loading" class="loading">

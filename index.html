@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Doctor Bee Profile</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Tardi Bear Profile</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
@@ -36,8 +39,11 @@
         background: linear-gradient(-45deg, #02126b, #7db9c4, #0f5280, #8fe6e9);
         background-size: 400% 400%;
         animation: gradientBG 15s ease infinite;
-        min-height: 100vh;
+
+        /* ✅ Responsive Layout Fixes */
+        min-height: 100dvh; /* Uses dynamic height for mobile browsers */
         display: flex;
+        flex-direction: column; /* Stacks Logo and Card vertically */
         align-items: center;
         justify-content: center;
         padding: 20px;
@@ -55,18 +61,30 @@
           background-position: 0% 50%;
         }
       }
+
+      /* ✅ Logo is now part of the flow, not absolute */
       .logo {
-        position: absolute;
-        top: 0px;
-        left: 50%;
-        bottom: 50px;
-        transform: translateX(-50%);
-        z-index: 10;
+        margin-bottom: 20px;
+        text-align: center;
+        animation: fadeIn 1s ease;
       }
 
       .logo img {
-        height: 150px;
-        width: auto; /* adjust if needed */
+        height: 140px;
+        width: auto;
+        transition: height 0.3s ease;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .card {
@@ -74,11 +92,13 @@
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-radius: 30px;
+
+        /* ✅ Responsive Widths */
         width: 100%;
-        max-width: 380px;
+        max-width: 400px; /* Slightly wider for modern phones */
+
         box-shadow: var(--shadow);
         overflow: hidden;
-        top: 20px;
         position: relative;
         animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         border: 1px solid rgba(255, 255, 255, 0.5);
@@ -114,6 +134,7 @@
         padding: 5px;
         background: var(--white);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        z-index: 2;
       }
 
       .avatar {
@@ -126,16 +147,17 @@
 
       /* Profile Content */
       .content {
-        padding: 70px 30px 40px; /* Top padding clears avatar */
+        padding: 75px 25px 30px; /* Adjusted padding */
         text-align: center;
       }
 
       .name {
-        font-size: 26px;
+        font-size: clamp(20px, 5vw, 26px); /* ✅ Dynamic Font Size */
         font-weight: 700;
         color: var(--text-dark);
         margin-bottom: 5px;
         letter-spacing: -0.5px;
+        word-wrap: break-word;
       }
 
       .role-badge {
@@ -155,14 +177,14 @@
       .info-list {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
       }
 
       .info-item {
         display: flex;
         align-items: center;
         background: #f8fafc;
-        padding: 15px 20px;
+        padding: 15px 15px; /* Tighter padding for mobile */
         border-radius: 16px;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         border: 1px solid transparent;
@@ -176,17 +198,17 @@
       }
 
       .icon-box {
-        width: 45px;
-        height: 45px;
+        width: 40px; /* Slightly smaller icon box */
+        height: 40px;
         background: linear-gradient(135deg, var(--accent2), var(--accent));
         border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 18px;
+        font-size: 16px;
         flex-shrink: 0;
-        margin-right: 15px;
+        margin-right: 12px;
         box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
       }
 
@@ -197,7 +219,7 @@
       }
 
       .info-label {
-        font-size: 11px;
+        font-size: 10px;
         text-transform: uppercase;
         color: var(--text-light);
         font-weight: 600;
@@ -206,7 +228,7 @@
       }
 
       .info-value {
-        font-size: 15px;
+        font-size: 14px;
         color: var(--text-dark);
         font-weight: 500;
         white-space: nowrap;
@@ -217,7 +239,7 @@
       /* Button */
       .download-btn {
         display: block;
-        margin-top: 30px;
+        margin-top: 25px;
         background: linear-gradient(135deg, var(--accent), var(--primary));
         color: white;
         text-decoration: none;
@@ -231,29 +253,50 @@
         overflow: hidden;
       }
 
-      .download-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 30px rgba(0, 123, 255, 0.4);
+      .download-btn:active {
+        transform: scale(0.98);
       }
 
-      .download-btn::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: 0.5s;
+      /* ✅ MEDIA QUERIES FOR DEVICES */
+
+      /* Small Phones (iPhone SE, Galaxy Fold) */
+      @media (max-width: 380px) {
+        .logo img {
+          height: 100px;
+        }
+        .card {
+          width: 95%;
+        }
+        .content {
+          padding: 60px 20px 25px;
+        }
+        .avatar-container {
+          width: 110px;
+          height: 110px;
+          top: 80px;
+        }
+        .name {
+          font-size: 22px;
+        }
+        .info-value {
+          font-size: 13px;
+        }
       }
 
-      .download-btn:hover::after {
-        left: 100%;
+      /* Landscape Mode (Short Screens) */
+      @media (max-height: 700px) {
+        body {
+          padding: 10px;
+          justify-content: flex-start;
+          overflow-y: auto;
+        }
+        .logo {
+          margin-bottom: 10px;
+          margin-top: 10px;
+        }
+        .logo img {
+          height: 80px;
+        }
       }
 
       /* States */
@@ -263,16 +306,17 @@
         padding: 60px 20px;
         color: var(--text-light);
       }
-      .loading i {
+      .loading i,
+      .error i {
         font-size: 40px;
-        color: var(--primary);
         margin-bottom: 15px;
+      }
+      .loading i {
+        color: var(--primary);
         animation: spin 1s linear infinite;
       }
       .error i {
-        font-size: 40px;
         color: #ef4444;
-        margin-bottom: 15px;
       }
 
       @keyframes spin {
@@ -311,9 +355,7 @@
 
           <div class="info-list">
             <div class="info-item">
-              <div class="icon-box">
-                <i class="fas fa-envelope"></i>
-              </div>
+              <div class="icon-box"><i class="fas fa-envelope"></i></div>
               <div class="info-text">
                 <div class="info-label">Email Address</div>
                 <div class="info-value" id="email">...</div>
@@ -321,9 +363,7 @@
             </div>
 
             <div class="info-item">
-              <div class="icon-box">
-                <i class="fas fa-phone"></i>
-              </div>
+              <div class="icon-box"><i class="fas fa-phone"></i></div>
               <div class="info-text">
                 <div class="info-label">Phone Number</div>
                 <div class="info-value" id="phone">...</div>
@@ -331,9 +371,7 @@
             </div>
 
             <div class="info-item">
-              <div class="icon-box">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
+              <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
               <div class="info-text">
                 <div class="info-label">Location</div>
                 <div class="info-value" id="address">...</div>
@@ -363,11 +401,10 @@
       }
 
       // 2. ✅ YOUR NGROK URL
-      const API_URL = ` https://guiltily-nonfenestrated-rodolfo.ngrok-free.dev/api/v1/patient/public/${userId}`;
+      const API_URL = `https://guiltily-nonfenestrated-rodolfo.ngrok-free.dev/api/v1/patient/public/${userId}`;
 
       async function loadProfile() {
         try {
-          // 3. ✅ CRITICAL HEADER
           const response = await fetch(API_URL, {
             method: "GET",
             headers: {
@@ -381,7 +418,6 @@
           const json = await response.json();
           const data = json.data || json;
 
-          // Update UI
           document.getElementById("fullName").innerText =
             data.fullName || "Unknown";
           document.getElementById("designation").innerText =
@@ -400,7 +436,6 @@
               "https://via.placeholder.com/150/007bff/ffffff?text=User";
           }
 
-          // Show Profile
           document.getElementById("loading").style.display = "none";
           document.getElementById("profile").style.display = "block";
         } catch (error) {
@@ -412,7 +447,6 @@
         }
       }
 
-      // Run
       if (userId) loadProfile();
     </script>
   </body>

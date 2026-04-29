@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -200,7 +200,9 @@
         background: #f8fafc;
         padding: 15px 15px; /* Tighter padding for mobile */
         border-radius: 16px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         border: 1px solid transparent;
       }
 
@@ -414,15 +416,13 @@
         userId = pathSegments[pathSegments.length - 1];
       }
 
-      // 2. ✅ YOUR NGROK URL
-      const API_URL = `https://3ee857ba96e7.ngrok-free.app/api/v1/patient/public/${userId}`;
+      const API_URL = `https://api.tardibear.com/api/v1/patient/public/${userId}`;
 
       async function loadProfile() {
         try {
           const response = await fetch(API_URL, {
             method: "GET",
             headers: {
-              "ngrok-skip-browser-warning": "true",
               "Content-Type": "application/json",
             },
           });

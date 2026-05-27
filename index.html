@@ -406,16 +406,29 @@
       </div>
     </div>
 
-    <script>
-      // 1. SMART ID RETRIEVAL
-      const urlParams = new URLSearchParams(window.location.search);
-      let userId = urlParams.get("id");
+   <script>
+      // 1. SMART ID RETRIEVAL FOR NEW URL STRUCTURE
+      let userId = null;
 
-      if (!userId) {
-        const pathSegments = window.location.pathname.split("/");
-        userId = pathSegments[pathSegments.length - 1];
+      // Split the URL path and remove empty segments
+      const pathSegments = window.location.pathname.split("/").filter(Boolean);
+
+      // Find exactly where "profile_view" is in the URL
+      const profileIndex = pathSegments.indexOf("profile_view");
+
+      // If "profile_view" is in the URL and there is a segment after it, that's our ID
+      if (profileIndex !== -1 && pathSegments.length > profileIndex + 1) {
+        userId = pathSegments[profileIndex + 1]; 
+        // Example: /profile_view/90/email/phone -> grabs "90"
+      } else {
+        // Fallback just in case it's passed as ?id=90
+        const urlParams = new URLSearchParams(window.location.search);
+        userId = urlParams.get("id");
       }
 
+      console.log("Extracted User ID:", userId); // Good for debugging in browser console
+
+      // 2. CONNECT TO YOUR BACKEND
       const API_URL = `https://api.tardibear.com/api/v1/patient/public/${userId}`;
 
       async function loadProfile() {
@@ -461,7 +474,13 @@
         }
       }
 
-      if (userId) loadProfile();
+      if (userId) {
+        loadProfile();
+      } else {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("error").style.display = "block";
+        document.getElementById("errorMsg").innerText = "Invalid Profile Link.";
+      }
     </script>
   </body>
 </html>

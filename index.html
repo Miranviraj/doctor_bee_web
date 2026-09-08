@@ -17,6 +17,7 @@
     />
     <style>
       :root {
+        /* Default = Emergency QR theme */
         --primary: #007bff;
         --primary-dark: #0056b3;
         --accent: #00d2ff;
@@ -28,6 +29,51 @@
         --white: #ffffff;
         --glass: rgba(255, 255, 255, 0.95);
         --shadow: 0 10px 40px -10px rgba(0, 123, 255, 0.2);
+        --header-gradient: linear-gradient(135deg, #1c8569, #2b8dbc);
+        --body-gradient: linear-gradient(
+          -45deg,
+          #1c8569,
+          #56d7b5,
+          #2b8dbc,
+          #9bd7ff,
+          #ffffff
+        );
+      }
+
+      /* GOLD Theme */
+      body.theme-gold {
+        --primary: #d97706;
+        --primary-dark: #b45309;
+        --accent: #f59e0b;
+        --accent2: #fde68a;
+        --shadow: 0 10px 40px -10px rgba(217, 119, 6, 0.25);
+        --header-gradient: linear-gradient(135deg, #b45309, #eab308);
+        --body-gradient: linear-gradient(
+          -45deg,
+          #b45309,
+          #f59e0b,
+          #eab308,
+          #fde68a,
+          #ffffff
+        );
+      }
+
+      /* PREMIUM Theme */
+      body.theme-premium {
+        --primary: #7c3aed;
+        --primary-dark: #5b21b6;
+        --accent: #a78bfa;
+        --accent2: #ddd6fe;
+        --shadow: 0 10px 40px -10px rgba(124, 58, 237, 0.25);
+        --header-gradient: linear-gradient(135deg, #5b21b6, #8b5cf6);
+        --body-gradient: linear-gradient(
+          -45deg,
+          #5b21b6,
+          #7c3aed,
+          #8b5cf6,
+          #c4b5fd,
+          #ffffff
+        );
       }
 
       * {
@@ -38,14 +84,7 @@
 
       body {
         font-family: "Poppins", sans-serif;
-        background: linear-gradient(
-          -45deg,
-          #1c8569,
-          #56d7b5,
-          #2b8dbc,
-          #9bd7ff,
-          #ffffff
-        );
+        background: var(--body-gradient);
         background-size: 400% 400%;
         animation: gradientBG 15s ease infinite;
         min-height: 100dvh;
@@ -105,7 +144,7 @@
 
       /* HEADER */
       .profile-header {
-        background: linear-gradient(135deg, #1c8569, #2b8dbc);
+        background: var(--header-gradient);
         padding: 30px 25px;
         display: flex;
         align-items: center;
@@ -655,6 +694,20 @@
           if (!response.ok) throw new Error("Failed");
           const json = await response.json();
           const data = json.data || json;
+
+          // ===== THEME SELECTION BASED ON PACKAGE =====
+          let theme = "emergency"; // default = Emergency QR
+          if (data.currentPackage) {
+            const pkg = data.currentPackage.toUpperCase();
+            if (pkg === "GOLD") {
+              theme = "gold";
+            } else if (pkg === "PREMIUM") {
+              theme = "premium";
+            }
+            // FREE or any other value stays as "emergency"
+          }
+          document.body.classList.add(`theme-${theme}`);
+          // ============================================
 
           // Header Info
           document.getElementById("fullName").innerText =
